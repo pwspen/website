@@ -1,0 +1,34 @@
+---
+title: "ClaudeCar"
+description: "Claude take the wheel"
+pubDate: "Dec 28 2024"
+heroImage: "/claudecar.jpg"
+---
+
+I gave Claude eyes and wheels. Check out the log of a single run below:
+
+import { LogViewer } from "../../logloader.tsx";
+
+<LogViewer mode="playback" logs_fpath="/src/test_log.json" client:load />
+
+[View the code for the project here.](https://github.com/pwspen/vlmcar)
+A python script runs on the car (it uses a Raspberry Pi). The script takes pictures with the camera
+and makes API calls with them encoded as a base64 string. I have the LLM report back a couple things -
+all the text in the logs above. I'm using [Pydantic's new agent library](https://ai.pydantic.dev/) which
+I'm enjoying a lot. This system definitely doesn't need it, but it gives you type validation for free
+because it's built on Pydantic, which I can see being indispensable as agent projects grow.
+
+I bought the car for $60 on Amazon. I definitely could have built my own but I'm trying to get better at,
+for a given project, laser focusing on exactly what I want to get done. I already know how to turn relays on and off
+and wire together DC motors so I wouldn't have learned a ton from building it.
+
+I suspect vision-language models are going to be incredibly important for the future of robotics. Instead of having to do
+a whole cycle of reinforcement learning, I can just edit the model's prompt to change its behavior, and I found This
+actually a pretty effective way of encouraging and stopping behaviors. I don't love that it's a very manual human task
+to create the prompt, but it's much more versatile than alternatives.
+
+Something similar to this project might make a really intersting vLLM benchmark. I tried a few different models
+and found that Claude was by far the best. Even the recent Gemini 2.0 wasn't as good, and Llama vision models were
+terrible. Half the time they think they don't have access to an image. I guess that's what you get for tacking on
+a vision system to text weights without retraining. Qwen 72b seems maybe pretty good but it doesn't support tool calling
+on Openrouter (where I'm getting all the models from) yet so it can't be used with pydanticAI.
