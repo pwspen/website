@@ -9,7 +9,8 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://synapsomorphy.com",
+  //   base: "/website",
   integrations: [mdx(), sitemap(), react(), tailwind()],
   vite: {
     assetsInclude: ["**/*.json"],
