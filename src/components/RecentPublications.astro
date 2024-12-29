@@ -9,7 +9,7 @@ const posts = (await getCollection("blog"))
 let numberOfPostsToDisplay = 3;
 let recentPosts = posts.slice(0, numberOfPostsToDisplay);
 
-import { Image } from "astro:assets";
+import {Image} from "astro:assets";
 ---
 
 <div class="px-4 md:px-16 flex flex-col gap-4 mt-16">
