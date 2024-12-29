@@ -25,6 +25,8 @@ posts.forEach((post) => {
   }
   postByYear[year].push(post)
 })
+
+const tags =  posts.flatMap(post => post.data.tags).filter((tag, index, self) => self.indexOf(tag) === index);
 ---
 
 <!doctype html>
@@ -35,14 +37,24 @@ posts.forEach((post) => {
   <body class="w-full  mx-auto my-4 max-w-screen-md dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
     <Header />
     <main
-      class="w-full max-w-screen-md mx-auto my-4 px-16 flex flex-col gap-4 justify-center"
+      class="w-full max-w-screen-md mx-auto my-4 px-4 flex flex-col gap-4 justify-center"
     >
+    <ul class="flex flex-wrap gap-2">
+      Tags (click to filter):
+      {tags.map(tag => (
+          <li>
+              <a href={`/tags/${tag}`} class=" p-1 rounded-md">
+                  #{tag}
+              </a>
+          </li>
+      ))}
+  </ul>
       {
         Object.keys(postByYear).sort(
           (a, b) => parseInt(b) - parseInt(a)
         ).map((year) => (
           <div class="flex flex-col">
-            <h2 class=" text-black dark:text-white font-bold mb-8">{year}</h2>
+            <h2 class=" text-black dark:text-white font-bold mb-8 text-2xl">{year}</h2>
             <div class="flex flex-col gap-4">
               
             {
@@ -59,13 +71,15 @@ posts.forEach((post) => {
                 })}
               </div>
             </div>
+            { post.data.heroImage &&
             <a href={`/blog/${post.slug}`}>
               <img
                 src={post.data.heroImage}
-                alt=""
+                alt={post.data.description}
                 class="w-40 h-24 bg-contain border border-gray-200"
               />
             </a>
+            }
           </div>
               ))
             }

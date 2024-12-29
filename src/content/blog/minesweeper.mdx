@@ -1,0 +1,59 @@
+---
+title: "Minesweeper Bot"
+description: ""
+pubDate: "Oct 5 2022"
+heroImage: "/src/content/imgs/2022/08/w1.png"
+tags: ['code']
+---
+import { Image } from 'astro:assets';
+
+<iframe class="youtube-player" width="640" height="360" src="https://www.youtube.com/embed/mRj8oMoSXuY?version=3&rel=1&showsearch=0&showinfo=1&iv_load_policy=1&fs=1&hl=en&autohide=2&wmode=transparent" allowfullscreen="true" style="border:0;" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation allow-popups-to-escape-sandbox"></iframe>
+
+Code available here: [https://github.com/pwspen/minesweeper_bot](https://github.com/pwspen/minesweeper_bot)
+
+I made a bot that somewhat reliably and quickly plays Google Minesweeper. This was done in a couple hundred lines of Python with very basic image/pixel recognition libraries. Its record is 9 seconds, which is only as long as it is because of the animations present in this version of the game, otherwise it would be in the milliseconds.
+
+Version of minesweeper this solves:
+[https://www.google.com/fbx?fbx=minesweeper](https://www.google.com/fbx?fbx=minesweeper) (hard mode)
+
+My only real goal for this project was to make something better than a human (very low bar for a computer), which this accomplishes. Its best solve time is 9 seconds. My only proof:
+
+I wish I could get a recording of an especially fast run, but my bot doesn't seem to play very nice with video recording software. It did get a 25 second run in the video above. Also, to get the 9 second run, it was on very fast, but thus risky and restart-prone settings. Watching fails over and over isn't fun (for me either, which is why I had the bot save screengrabs of wins for me).
+
+This bot is about 500 lines of Python. This is the core loop it runs through:
+1. Takes screenshot of board area
+2. Parses screenshot to update game board information (where a tile is 1, 2, unexplored, blank, etc) by looking at one pixel on each tile. The color of that pixel determines the state. This is possible because each number is a different color in Minesweeper (and also a different color from blank or unexplored tiles).
+3. Updates bomb locations with very simple algorithm.
+4. Identifies clickable tiles with very simple algorithm and clicks on them.
+
+It also has capabilities to automatically restart the game, detect wins and print out a screengrab of them, and logic to pick a tile least likely to be a bomb when there are no obvious clear tiles to click on (more on this later).
+
+By far the largest limitation on this bot is its method of board information gathering where it takes a screenshot. If the bot was directly pipelined into Minesweeper (running the game internally, and just displaying the board for humans) solve time would almost definitely be less than a second.
+
+Also, if I were to modify this bot for almost any other version of Minesweeper (I'll probably get to this eventually � only minimal changes required), it would be a lot faster. The animation on Google's Minesweeper of the green squares falling away from the board after clicking on a tile means the bot has to wait a long time between clicking and scanning the board for reliable results.
+
+A smarter bot using image recognition wouldn't have as bad of a problem with this (although it would certainly still be a problem), but image recognition is slow on the computers I have access to. Instead, my bot grabs a single pixel per game tile, and compares its color to known tile colors to find what tile it is. This is pretty reliable (when the pixel it looks at isn't obscured by a falling green square), but it is very sensitive to the pixel's position inside the tile. Before doing anything, the bot first gets the pixel heights and widths of each row and column, respectively. This lets it target the same position inside each tile. Also, this technique is only possible at all because there happens to be very small areas where, in the font the game uses, all of the numbers overlap. If this weren't the case, the bot would have to scan two or more pixels, which would be easy to implement, but (likely significantly) slower.
+
+The way the bot's bomb logic works is this: For every numbered tile on the board, if it only has as many unexplored tiles around it as its number, then those unexplored tiles are bombs.
+
+The clicking logic works similarly: For every numbered tile on the board, if it has as many bombs around it as its number, then click on all of the unexplored tiles around it.
+
+Somewhat surprisingly, these two rules are pretty much all that's needed to solve Minesweeper. The only edge case is when there are no obvious tiles to click on:
+
+<Image src={import('@imgs/2022/08/indet.png')} alt="Indeterminate case" />
+
+There are multiple possible bomb arrangements for situations like this, which makes it a much more difficult problem than other orientations. In situations like these, I'm not sure if there are tiles that are always bombs or always safe. It would seem like either a bomb or a safe tile could be placed at any one of the unexplored perimeter tiles and a solution could be found for bomb positions, but I haven't ran through that for this or any other orientation. It's also possible that in this orientation there are no "always bomb" or "always safe" tiles, but in other orientations there are.
+
+Anyways, creating a solver for situations like the above seemed probably impossible, and a lot of work for not much gain if it's not (many runs that end up winning never have to click on any 'indeterminate' tiles). My solution was to click based on probability of being a bomb. At first, I looked at every numbered tile, found the one with the most unexplored tiles around it, and clicked on one of them randomly. However, this lead to things like clicking to a tile right next to a '6' tile, because on the other side it had a '1' with a lot of unexplored tiles around it. I realized it's smarter to instead look at unexplored tiles, and find the one with the lowest (nonzero, where unexplored or blank tiles are zero) sum of numbers around it. This still isn't the best, because it doesn't take into account at all the information gained from a click, but something like that is a lot harder to quantify. It works decent enough, and never clicks on tiles that have big numbers around them, which is all I need it to do. Ran at slower speeds (so the board scanning process is 100% successful), this logic clicking a bomb tile is pretty much the only time the bot ever fails � the bomb and clicking logic stated above are perfect. It's interesting that a game can be condensed down to two very simple rules for 95% of cases.
+
+The bot is not very widely applicable. It works in my browser, on my screen resolution, with the google minesweeper link pulled up, and sometimes not even then. The way the bot is written, it actually wouldn't be too much of a hassle to get it working on other platforms, I just don't want to go through the work of making a "final product" that has few enough bugs to be worthy of being ran on other computers (far from the current state � it's not that hard to get going or to have it get wins, but it makes). No board size or location is assumed, you just need to feed the bot a screen snip of the board and the few layers of pixels around it. It doesn't just have a hardcoded screen location, which would be the easiest way to approach the problem of knowing where the board is.
+
+There were a lot of roadblocks in this project. I didn't (and don't!) know much about programming, so I learned a lot working through them. One of the most annoying things I learned was that the most available or common libraries are by no means the best. I used the library "pyautogui" for image recognition, pixel comparisons, and clicking on the screen for the start of this project. Over time I learned that the way it does all of those things is slow, bad, or even slow and bad. For image recognition, it's just slow. This is the only thing I'm still using the library for, because I couldn't find a simple alternative that's any faster. For pixel comparisons (grabbing a pixel on the board and checking it against a known RGB value) the library has an extremely annoying bug where the pixel comparison function inexplicably stops working after a few thousand uses, and doesn't start working again until the computer is restarted. Apparently it's something to do with the library not playing nice with the Windows function it uses to acquire RGB values of the screen. To replace this, I used Pillow (PIL) to get the pixel from the screen and wrote a few lines of code to do the comparison (which also ended up being a lot faster than the original library's version, even though it's doing everything the original version did). For clicking on things, pyautogui is *very* slow compared to other clicker libraries (I went with "mouse")- on the order of 100x slower, and also seemed to sometimes click in places other than specified.
+
+There's also things I can't blame on libraries: Originally, for comparing pixels, I was using a function that took a screenshot of the board for every pixel compared. This is a) completely pointless and b) very slow, and it took me a while to catch it.
+
+After these rewrites, the bot became much (~5x) faster, and then the bottleneck turned into aspects of the game (aforementioned animation) instead of aspects of the code, so for the version played, it really cannot get much faster.
+
+If I were to redo this project, there's a lot I would do differently. In the current version, the game board is one 2-dimensional array, the same size as the number of rows and columns in the game itself. Things like specifying bombs and where to click are done on this board only, which means it has a lot of things being done to it. In a future version, I would make this array three-dimensional, and have 'layers' for each type of tile that is not something scanned in from the board: identified bombs, tiles to be clicked on, tile least likely to be a bomb if there are no definite safe tiles, etc. I'm not sure the performance (speed) impacts this might have, but it would certainly simplify code and give the ability to do some things that would currently be a pain to implement. For example, the program currently does not save where it has clicked on, and as it iterates through the board looking for safe tiles to click on, it double-clicks on a lot of tiles (because the board is only scanned once every game loop). This doesn't really matter because of how fast the clicking happens, but it would be nice to have it only click once. To do this, the clicked on tile must be saved in some way. I tried to do this by saving it as a state on the board, but this caused errors for a lot of the bomb-scanning and clicking logic that were expecting a different value for an unexplored tile. I fixed this, but eventually removed it entirely because it was clunky and making things more difficult. There are other elegant ways to solve this, but one is an entirely separate array for the points that have been clicked on in a given game loop.
+
+This project gave me the ability to have code look at something on the screen visually, parse for the desired information, and interact with it by clicking or typing. I can see that being very useful in some situations. Also, the situations that these skills would help with would be some of the most annoying situations, where a human is required to perform the same very simple task over and over again. So if I ever have to enter thousands of data points into a program manually, or go through many files and perform an action on them based on their name, I know who to call [my code from this project, and pray that it has enough comments to be intelligible].

@@ -1,0 +1,17 @@
+---
+title: "Todo"
+description: ""
+pubDate: "Feb 1 2024"
+heroImage: "/src/content/imgs/todo/todo.gif"
+tags: ['code']
+---
+
+[Project Github repo](https://github.com/pwspen/CmdTodo)
+
+I wrote a command line todo program in Python for personal use. Like any programmer, there wasn't an option out there with the exact stuff and options I want, so I made my own. I actually use this in my day to day life.
+
+The core of the program is adding and completing (removing) tasks. I wanted to build-in accountability to the program, so you have to provide a reason for deleting a task if you're not completing it, and your history of task additions and completions is saved. A visualizer for this information still needs to be developed.
+
+All tasks have associated due dates that are set when the task is created. Your task list is saved to a JSON file whenever you modify it. I implemented an "urgency" value for each task with the idea being it can help you a bit with prioritization when you have a million things on your plate like I tend to. Urgency is calculated based on assigned date, due date, and current date, and the function is user-settable.
+
+I'd like to take the core idea of this program and make a version of it that I can actually distribute and open-source, I think there might be people out there looking for a similar program. As part of this process, I'd rewrite it in a different language (maybe C++) and maybe build a minimal UI or make it a webapp.

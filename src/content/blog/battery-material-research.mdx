@@ -1,0 +1,25 @@
+---
+title: "Battery Material Research"
+description: ""
+pubDate: "Feb 1 2023"
+heroImage: "/src/content/imgs/2023/03/image-8.png"
+tags: ["electrical", "job"]
+---
+import { Image } from 'astro:assets';
+
+<Image src={import('@imgs/2023/03/image-9.png')} alt="Black phosphorus anodes" />
+
+Top: Coin cell batteries going through electrical testing on galvanostat
+Bottom: Black phosphorus anodes ready for battery assembly
+
+Between Feb � May 2021, during my internship at my university's renewable energy lab, I managed a research project investigating performance of sodium and black phosphorus as battery electrode materials. I was in charge of all steps of the process, from material and component preparation (like the electrodes above), to battery assembly, to electrical testing to determine voltage, capacity, and cyclability properties among others, to examining battery electrodes with Raman and X-ray diffraction spectroscopy, and then using that spectroscopy data to make changes to material prep and battery assembly in order to improve electrical properties. 
+
+I presented my progress weekly to one of the lab's professors and communicated constantly with other researchers for advice and assistance. I also frequently read literature published on similar battery chemistries to find new ways to improve electrical performance.
+
+I prepared the battery anodes by mixing black phosphorus with additives in specific ratios, then pressed the resultant layered material onto a wire mesh substrate (pictured above). These phosphorus anodes were dried for a day, and then moved into an argon glovebox, along with the other battery components for battery assembly. In the glovebox, I made the sodium metal cathode and assembled the batteries, then removed them from the glovebox and hooked them up for electrical testing, which could take a few days. After they were depleted to a certain voltage or had been cycled between two voltages a certain number of times, I identified specific cells which had the potential to produce interesting spectroscopy results and then prepared them for examination and used Raman or XrD spectroscopy machines and associated software to examine material properties � specifically, the degree of intercalation of sodium ions into the black phosphorus anode, which is associated with cyclability / reusability.
+
+In the end, I determined that sodium-BP battery chemistry had a relatively low degree of cyclability / reusability (specifically, the sodium ions were too large and ripped apart the layered anode as they entered and exited it, which led to a much lower anode charge capacity over just a few charge-discharge cycles). If they can ever be made commercially feasible, sodium ion batteries will be very interesting because they stand a chance at replacing lithium in some applications (those where energy density and current capacity are not concerns, like renewable energy storage). Lithium is rare, a conflict mineral, and quickly running out / becoming more expensive to extract, while sodium is extremely plentiful everywhere you look, especially the ocean. I'm very happy to have played a tiny part in moving the world in a more renewable direction.
+
+<Image src={import('@imgs/2023/03/image-10.png')} alt="Ruptured coin cell battery" />
+
+Coin cell battery that I assembled, ruptured due to bad assembly. For the first few weeks I worked on this project, around half the batteries ruptured like this partway through testing until I figured out the mistake I was making in the assembly process and fixed it.

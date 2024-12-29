@@ -1,0 +1,28 @@
+---
+title: "NASA SWE Internship"
+description: ""
+pubDate: "Feb 2024"
+heroImage: "/src/content/imgs/nasa/nasa-headshot.JPG"
+tags: ['code', 'electrical', 'job']
+---
+
+[My internship paper/report was approved for release and you can read it here! (many more software pics)](/src/content/NASA_paper.pdf)
+
+I was a software engineering intern at NASA Ames Research Center in Fall 2023. I worked at the Rotorcraft Aeromechanics office, which does research, design, and testing of various types of rotorcraft: helicopters, UAM vehicles (urban air mobility - basically people-carrying drones), and extraterrestrial rotorcraft like the Ingenuity and Mars Sample Return helicopters and the Dragonfly mission going to Titan.
+
+My main project was the development of a data acquisition and GUI program for rotor testing, developed for a specific testing program: the Outwash project, which aims to determine the velocity profile of outward-flowing air near a rotorcraft hovering close to the ground. Being able to estimate the outflowing air velocity profile of rotorcraft is going to be important for safety in the future if urban air mobility vehices become much more common, as they seem poised to.
+
+import { Image } from 'astro:assets';
+
+<Image src={import('@imgs/nasa/manager.png')} alt="Manager interface" />
+
+I wrote this software in Python, and used Qt as the GUI framework. The program has to interface with various sensors over various different communication protocols, so some networking and electronics was required. I had to communicate extensively with the Outwash team to figure out exactly what they needed out of the software, how to make it as easy to use as possible, and how to make it also suitable for adaptation into future testing programs. I worked closely with software engineers in the office to make a maintainable, readable, and efficient end product.
+
+<Image src={import('@imgs/nasa/datavis.png')} alt="Data visualization" />
+
+I also developed computer vision software, in Python using the OpenCV computer vision framework, to automatically determine the pointing angle of aerodynamic tufts. Being able to reliably extract the pointing angle of tufts turns them from decent backup / double-check sensors into very useful wind-direction sensors that need no electronics except a camera recording a video.
+
+<Image src={import('@imgs/nasa/2.png')} alt="Tuft analysis 2" />
+<Image src={import('@imgs/nasa/1.png')} alt="Tuft analysis 1" />
+
+I also contributed to the development of Mars Sample Return helicopter software. Specifically, I added features to flight performance estimation / simulation software written in MATLAB. These features allowed for the discovery of some previously unknown flight dynamics effects.

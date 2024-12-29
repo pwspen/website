@@ -1,0 +1,27 @@
+
+2024-12-29 13:38:33,298 - Could not find the hero image for the post "closed-loop-control-self-stabilizing-stick"
+2024-12-29 13:38:33,299 - closed-loop-control-self-stabilizing-stick needs extra attention: Post contains YouTube embed that needs to be handled
+2024-12-29 13:44:29,405 - Could not find the hero image for the post "control-vector-interface"
+2024-12-29 13:44:55,188 - Could not find the hero image for the post "cybernetic-world"
+2024-12-29 13:45:07,507 - Could not find the hero image for the post "cyborgiversary"
+2024-12-29 13:46:14,350 - Could not find the hero image for the post "hopper"
+2024-12-29 13:46:32,421 - human-exceptionalism-emergent-behavior-panpsychism needs extra attention: There are horizontal line separators (hr elements) that need to be preserved with markdown ---
+2024-12-29 13:46:32,421 - Could not find the hero image for the post "human-exceptionalism-emergent-behavior-panpsychism"
+2024-12-29 13:47:53,774 - l1-rocket needs extra attention: Contains YouTube embed that needs to be handled
+2024-12-29 13:48:04,186 - l2-rocket needs extra attention: Post contains special HTML layout elements (side-buttons, layout-container, etc) that were stripped in conversion
+2024-12-29 13:48:17,743 - Could not find the hero image for the post "metamorphosis"
+2024-12-29 13:49:10,336 - Could not find the hero image for the post "minesweeper"
+2024-12-29 13:49:10,336 - minesweeper needs extra attention: Post contains embedded YouTube iframe that needs to be handled appropriately
+2024-12-29 13:56:50,333 - pterobot needs extra attention: Post contains iframes displaying training data and a PDF. These will need appropriate file paths.
+2024-12-29 13:57:11,908 - quadcopter needs extra attention: Post contains a YouTube embed that needs to be handled. Also contains a two-column layout section.
+2024-12-29 13:57:32,984 - Could not find the hero image for the post "sensorimotor-panpsychism"
+2024-12-29 13:58:18,710 - spaceport-2022-season needs extra attention: Post contains a YouTube embed that needs to be handled
+2024-12-29 13:58:35,601 - Could not find the hero image for the post "the-lie-we-tell-ourselves"
+2024-12-29 13:58:35,602 - the-lie-we-tell-ourselves needs extra attention: Contains a visual blind spot test that should be preserved
+2024-12-29 13:59:26,343 - Could not find the hero image for the post "thoughts-on-engineering-field-dec-2022"
+2024-12-29 14:00:41,819 - Could not find the hero image for the post "website"
+2024-12-29 14:00:41,819 - website needs extra attention: This post uses TailwindCSS classes throughout the text. These should be preserved in the MDX format.
+2024-12-29 14:00:56,320 - Could not find the hero image for the post "weird-math"
+2024-12-29 14:00:59,665 - weird-math needs extra attention: This post contains multiple mathematical diagrams and images that need special handling
+2024-12-29 14:02:54,612 - xl-1 needs extra attention: Post contains custom HTML layout elements with side containers and styling that will be removed in conversion
+2024-12-29 14:03:07,886 - xodiac-testing needs extra attention: Post contains YouTube embeds - these will need custom components

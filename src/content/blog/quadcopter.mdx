@@ -1,0 +1,40 @@
+---
+title: "Quadcopter"
+description: ""
+pubDate: "Feb 27 2023"
+heroImage: "/src/content/imgs/2023/02/image-1.png"
+tags: ['electrical']
+---
+import { Image } from 'astro:assets';
+
+I built this drone from parts in August 2021. I selected components that would work together (flight computer, electronic speed controller (motor controller), video transmitter, camera, battery, motors, frame, radio receiver), soldered (20-30 joints) them together with the help of a wiring diagram I made, troubleshooted various electrical gremlins, and eventually got it flying great. Its propellers are 5" diameter and it weighed about 700g with a battery.
+
+The frame came mostly ready to be built, so there wasn't much mechanical to this project besides tightening a few bolts, although I did print the gopro holder out of TPU (which worked surprisingly well for not having printed TPU before, and for having a Bowden tube instead of direct drive). 
+
+The flight computer came with the firmware I wanted (Betaflight). I flashed new firmware to the radio receiver, going for the open-source expressLRS instead of the stock FrSky protocol. This worked very well. Since then, eLRS has become way more common, and now there is no reason to flash eLRS onto anything, because preflashed eLRS hardware is available at impressively cheap prices.
+
+The fully finished drone worked perfectly. I don't know exactly what speeds it could get up to, but it wouldn't surprise me if it could reach 80mph and I know I pulled at least 10 gs of acceleration at one point. Flight time was about 6 minutes depending on the battery and gopro presence.
+
+<Image src={import('@imgs/2023/02/image-2.png')} alt="Comparison of two drones" />
+
+Big brother, little brother
+
+<Image src={import('@imgs/2023/02/image-5.png')} alt="Flight computer and wiring" />
+
+Flight computer, wiring
+
+This drone lived a pretty tough life. I built it (mainly by frame choice) to be very strong and durable, so it got smashed into walls (even concrete a few times..) and the ground a lot and didn't complain much. Eventually, in March 2022, I flew too close to the sun showing off my flying skills to some friends and it ended up 100ft up a tree. See if you can find it.
+
+<div className="columns-2">
+<Image src={import('@imgs/2023/02/image-7.png')} alt="Drone stuck in tree" />
+
+And as far as I know, that is where it remains, if it hasn't been knocked out of the tree yet (I've gone back to check on it a few times, but it's very firmly lodged). I tried a few different things to get it out, but I was becoming a bit less interested in RC at the time anyways, getting busier and my FPV goggles had broken and I didn't want to spend on new ones. My plan for getting things out of trees in the future is arborist throw weights. Or a bow and arrow.
+</div>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/guvMds7Z4mA" title="RC Plane Chase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Footage from my other drone of chasing RC planes.
+
+<Image src={import('@imgs/2023/02/image-8.png')} alt="RC plane" />
+
+My RC plane
