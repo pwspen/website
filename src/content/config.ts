@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content'
+import { Image } from 'astro:assets'
 
 const blog = defineCollection({
     type: 'content',

@@ -7,7 +7,6 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import FormattedDate from "@components/FormattedDate.astro";
 import TagLink from "@components/TagLink.astro";
 
-
 type Post = CollectionEntry<'blog'>;
 
 const posts = (await getCollection("blog")).sort(
@@ -27,6 +26,8 @@ posts.forEach((post) => {
 })
 
 const tags =  posts.flatMap(post => post.data.tags).filter((tag, index, self) => self.indexOf(tag) === index);
+
+import { Image } from "astro:assets";
 ---
 
 <!doctype html>
@@ -73,8 +74,8 @@ const tags =  posts.flatMap(post => post.data.tags).filter((tag, index, self) =>
             </div>
             { post.data.heroImage &&
             <a href={`/blog/${post.slug}`}>
-              <img
-                src={post.data.heroImage}
+              <Image
+                src={import(post.data.heroImage)}
                 alt={post.data.description}
                 class="w-40 h-24 bg-contain border border-gray-200"
               />
