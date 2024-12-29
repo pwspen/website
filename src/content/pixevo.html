@@ -1,0 +1,58 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script src="/side-buttons.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Patrick Spencer's Portfolio</title>
+</head>
+<body>
+<div class="layout-container">
+    <div class="side-container">
+        <side-buttons></side-buttons>
+    </div>
+    <div class="title text-page-container flex flex-col items-center justify-center">
+        <h1 class="text-3xl text-center m-5"> Pixelated Evolution </h1>
+
+        <img class="rounded-lg m-2" src="/portfolio/imgs/pixevo/pixevo.gif" style="height: 300; width: auto">
+
+        <a href="https://github.com/pwspen/pixevo" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600 m-3"> Project Github repo </a>
+        
+        <p class="m-2 w-full">This is a project, written in Python, that simulates evolution. I like to think of it like "evolution where pixels are the unit of information".</p>
+
+        <p class="m-2 w-full">Above, you can watch the right side of the image, starting from random noise, evolve to match the left side.</p>
+
+        <p class="m-2 w-full">The end goal of this project is to create an environment in which to examine the process of evolution and run tests on it.
+            I'm also going to create a web interface intended to teach evolution in a visual and easy-to-understand way: as the image evolves visually, the evolutionary family tree will be generated alongside it.
+        </p>
+
+        <p class="m-2 w-full">The core loop is: Parent image creates child images with mutations. Child images closer to the target image (higher fitness) have more children of their own. That's it.</p>
+
+        <p class="m-2 w-full">There are a number of different parameters and modes that can be set that shape evolution: generation size, children distribution as function of parent fitness,
+            mutation fraction (can be set as function of fitness), etc. 
+        </p>
+
+        <p class="m-2 w-full">Evolution is interesting to me because of how it contrasts with machine learning algorithms: it is totally 'unguided' which has advantages and disadvantages, and it is much simpler.
+            Using the Pixevo framework, I could compare high-level evolutionary algorithms to ML algorithms in a visual and easily interpretable way.            
+        </p>
+
+        <p class="m-2 w-full">Below are some examples of tests I've already run that reveal some interesting things about evolutionary algorithms.
+            For both plots, the x and y axes are the same: mutation fraction and number of children (this was run in single-lineage mode, so only one parent survives each generation). Both of these are sorta analogous to learning rate in machine learning.
+        </p>
+
+        <div class="m-4" style="display: flex; justify-content: center; align-items: center;">
+            <img src="/portfolio/imgs/pixevo/genmap.png" style="height: 400; width: auto; display: inline" class="mr-20">
+            <img src="/portfolio/imgs/pixevo/lossmap.png" style="height: 400; width: auto; display: inline">
+        </div>
+
+        <p class="m-2 w-full">
+            On the left, the color indicates generations until no more progress is being made (higher is better). On the right, color indicates the loss (inverse of fitness) after a fixed number of generations (lower is better). The right graph is especially interesting because there is a clear peak indicating a 'sweet spot' for learning around x=0.02 and y>50.
+        </p>
+
+        <!-- <iframe src='/filehost/train6.html' width='100%' height='600px' frameborder='0'></iframe> -->
+
+        <!-- More stuff goes here!  -->
+
+    </div>
+    <div class="side-container"></div>
+    </div>
+</body>

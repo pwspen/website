@@ -9,11 +9,10 @@
     {
       "@src/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
       "@consts/*": ["src/consts/*"],
-      "@layouts/*": ["src/layouts/*"]
-
+      "@layouts/*": ["src/layouts/*"],
+      "@imgs/*": ["src/content/imgs/*"],
     }
   }
 }
