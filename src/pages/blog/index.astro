@@ -75,7 +75,7 @@ import { Image } from "astro:assets";
             { post.data.heroImage &&
             <a href={`/blog/${post.slug}`}>
               <Image
-                src={import(post.data.heroImage)}
+                src={post.data.heroImage}
                 alt={post.data.description}
                 class="w-40 h-24 bg-contain border border-gray-200"
               />
