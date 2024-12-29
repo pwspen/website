@@ -22,6 +22,11 @@ img {
     height: auto;
 }
 
+p > code {
+@apply bg-gray-200;  /* Light grey */
+/* or @apply bg-slate-100; for a slightly different tone */
+}
+
 @layer base {
     /* Target links within blog post content */
     article .mt-10 a {
