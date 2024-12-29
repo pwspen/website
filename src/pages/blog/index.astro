@@ -1,111 +1,80 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import BaseHead from "@components/BaseHead.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@consts";
+import { getCollection, type CollectionEntry } from "astro:content";
+import FormattedDate from "@components/FormattedDate.astro";
+import TagLink from "@components/TagLink.astro";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+
+type Post = CollectionEntry<'blog'>;
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const postByYear: {
+  [year: number]: Post[];
+} = {}
+
+posts.forEach((post) => {
+  const year = post.data.pubDate.getFullYear()
+  if (!postByYear[year]) {
+    postByYear[year] = []
+  }
+  postByYear[year].push(post)
+})
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="w-full  mx-auto my-4 max-w-screen-md dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
+    <Header />
+    <main
+      class="w-full max-w-screen-md mx-auto my-4 px-16 flex flex-col gap-4 justify-center"
+    >
+      {
+        Object.keys(postByYear).sort(
+          (a, b) => parseInt(b) - parseInt(a)
+        ).map((year) => (
+          <div class="flex flex-col">
+            <h2 class=" text-black dark:text-white font-bold mb-8">{year}</h2>
+            <div class="flex flex-col gap-4">
+              
+            {
+              postByYear[parseInt(year)].map((post: Post) => (
+              <div class="flex gap-2 justify-between border-b pb-4">
+            <div class="flex flex-col gap-4">
+              <FormattedDate date={post.data.pubDate} />
+              <a class="font-bold text-lg" href={`/blog/${post.slug}`}>
+                {post.data.title}
+              </a>
+              <div class="flex gap-2">
+                {post.data.tags?.map((i: string) => {
+                  return <TagLink tag={i} />;
+                })}
+              </div>
+            </div>
+            <a href={`/blog/${post.slug}`}>
+              <img
+                src={post.data.heroImage}
+                alt=""
+                class="w-40 h-24 bg-contain border border-gray-200"
+              />
+            </a>
+          </div>
+              ))
+            }
+            </div>
+
+          </div>
+        ))
+      }
+    </main>
+    <Footer />
+  </body>
 </html>
