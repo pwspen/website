@@ -1,0 +1,28 @@
+---
+title: "Eventabot"
+description: "LLM webapp to collate and rate events"
+pubDate: "Dec 29 2024"
+heroImage: "../imgs/eventabot/app.png"
+tags: ['ai', 'code']
+---
+import { Image } from 'astro:assets';
+
+import { Youtube } from '@astro-community/astro-embed-youtube';
+
+I made a simple LLM webapp that pulls events from Meetup.com's API. [Try it here!](https://pwspen.github.io/eventabot/) (desktop highly recommended!)
+
+(note that the location and event sources are both just for show right now.. coming soon™)
+
+Each event is given a rating by asking the LLM how good of a fit it is with the user's inputted interests. You might think this is inefficient and wasteful. Absolutely!! But LLM tokens are getting pretty cheap these days. I'm using Amazon's Nova Lite model and in all of the development and testing, where I processed maybe a couple thousand events, the total cost was a few cents. 
+
+You might also think this is just a search engine but worse. Not quite! The main advantage of a system like this is that it can accommodate all of a user's interests at the same time. Say you're interested in concerts, board games, and running. That's 3 separate searches, and honestly half of the impetus for this project was that meetup's search and recommendations are really bad. With this app, type in your interests one time, the more detail the better, and they can all be accounted for and matched with events. Meetup does let you select categories of events you're interested in, but that doesn't have nearly the specificity that "just type what you like" does.
+
+You might also say, "Meetup could just integrate this into their site, what's the point?" Absolutely true! Unless the incumbent players move extremely slowly, I don't think there's much of a market for little LLM apps like this one that exist only because they can skim data from someone else. As intelligence becomes cheaper, data is increasingly becoming the thing that enables value generation.
+
+Written in react. I have a python server hosted on Render for the backend to get around CORS and so you can't steal my [OpenRouter](https://openrouter.ai/) API key. (it has a limit of 10 bucks but still!)
+
+
+
+{/* <Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" /> */}
+
+{/* [Link](https://github.com/pwspen) */}

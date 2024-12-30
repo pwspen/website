@@ -8,29 +8,29 @@ import TagLink from "../components/TagLink.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, heroImage, tags } = Astro.props;
+const post = Astro.props;
 
 import { Image } from "astro:assets";
 ---
 
 <html lang="en" class="dark">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={post.title} description={post.description} />
   </head>
   <body class="w-full max-w-screen-md mx-auto my-4 dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
     <Header />
     <main>
       <article class="px-4">
         <div class="flex justify-between mb-6">
-          <FormattedDate date={pubDate} />
-          <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium tracking-wide">
+          <FormattedDate date={post.pubDate} />
+          <!-- <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium tracking-wide">
             5 min read
-          </p>
+          </p> -->
           <div>
             {
-              tags && (
+              post.tags && (
                   <ul class="flex gap-2">
-                    {tags.map((tag) => (
+                    {post.tags.map((tag) => (
                       <li>
                         <TagLink tag={tag} />
                       </li>
@@ -41,12 +41,12 @@ import { Image } from "astro:assets";
           </div>
         </div>
         <h1 class="text-5xl mb-8">
-          {title}
+          {post.title}
         </h1>
         <div>
           {
-            heroImage && (
-              <Image width={1020} height={510} src={heroImage} alt="" />
+            post.heroImage && (
+              <Image width={1020} height={510} src={post.heroImage} alt="" />
             )
           }
         </div>

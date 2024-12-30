@@ -5,6 +5,8 @@ import tailwind from '@astrojs/tailwind';
 
 import react from "@astrojs/react";
 
+import { remarkReadingTime } from '@utils/remarkReadingTime.mjs';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://synapsomorphy.com',

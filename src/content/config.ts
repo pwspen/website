@@ -12,6 +12,7 @@ const blog = defineCollection({
         heroImage: image().optional(),
         tags: z.array(z.string()).optional(),
         inGrid: z.boolean().optional().default(true),
+        readingTime: z.number().optional(),
     }),
 })
 
