@@ -11,18 +11,6 @@ import { remarkReadingTime } from '@utils/remarkReadingTime.mjs';
 export default defineConfig({
   site: 'https://synapsomorphy.com',
   integrations: [mdx(), sitemap(), tailwind(), react()],
-  markdown: {
-    shikiConfig: {
-      // Choose from Shiki's built-in themes (or add your own)
-      // https://shiki.style/themes
-      // Alternatively, provide multiple themes
-      // See note below for using dual light/dark themes
-      themes: {
-        light: 'poimandres',
-        dark: 'catppuccin-latte'
-      }
-    }
-  },
   vite: {
     resolve: {
       alias: {
@@ -34,5 +22,18 @@ export default defineConfig({
         '@imgs': 'src/content/imgs'
       }
     }
+  },
+  markdown: {
+    shikiConfig: {
+      // Choose from Shiki's built-in themes (or add your own)
+      // https://shiki.style/themes
+      // Alternatively, provide multiple themes
+      // See note below for using dual light/dark themes
+      themes: {
+        light: 'poimandres',
+        dark: 'catppuccin-latte'
+      }
+    },
+    remarkPlugins: [remarkReadingTime]
   }
 });
