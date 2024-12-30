@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const posts = await getCollection('blog');
+const projectsWithImages = posts.filter(post => post.data.heroImage).filter(post => post.data.inGrid);
+
+const randomizedProjects = [...projectsWithImages].sort(() => Math.random() - 0.5);
+---
+
+<div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {randomizedProjects.map((project) => (
+            <a 
+                href={`/blog/${project.slug}`} 
+                class="group relative aspect-square rounded-lg overflow-hidden shadow-sm hover:shadow-sm transition-all duration-300"
+            >
+                <div class="w-full h-full overflow-hidden">
+                    <Image 
+                        src={project.data.heroImage}
+                        alt={`Cover image for ${project.data.title}`}
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                </div>
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-25 transition-all duration-300">
+                    <h2 class="absolute inset-x-0 bottom-0 p-3 text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {project.data.title}
+                    </h2>
+                </div>
+            </a>
+        ))}
+    </div>
+</div>

@@ -4,6 +4,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@src/consts";
 import RecentPublications from "@components/RecentPublications.astro";
+import ProjectGrid from "@components/ProjectGrid.astro";
 ---
 
 <!doctype html>
@@ -12,11 +13,8 @@ import RecentPublications from "@components/RecentPublications.astro";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body class="w-full max-w-screen-md mx-auto my-4 dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300" >
-    <Header />
-    Coming soon
-   
-	  <RecentPublications />
-	      </main>
+    <Header />   
+	  <ProjectGrid>
     <Footer />
   </body>
 </html>
