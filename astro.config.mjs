@@ -35,5 +35,8 @@ export default defineConfig({
       }
     },
     remarkPlugins: [remarkReadingTime]
+  },
+  redirects: {
+    '/portfolio/': '/'
   }
 });
