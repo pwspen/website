@@ -1,0 +1,40 @@
+---
+title: "Reinforcement Learning: once and future king"
+description: "desc"
+pubDate: "Feb 5 2025"
+heroImage: "../imgs/claudecar.jpg"
+tags: ['essay']
+---
+import { Image } from 'astro:assets';
+
+import { Youtube } from '@astro-community/astro-embed-youtube';
+
+<Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" />
+
+[Link](https://github.com/pwspen)
+
+Reinforcement learning drove many of the advances in pre-LLM AI. It's by far the most common method of training robots to move, and it also drove important narrow-superintelligence advancements like chess and Go. Now it looks like it might be the most important invention in human history, driving us to AGI and beyond.
+
+Unsupervised is the main technology behind today's language model boom. A large fraction of the text on the internet is shoveled into an optimizer algorithm trained to sculpt a different algorithm (for most LLMs, a transformer) to predict the next token. Most people are aware of this by now.
+
+This way of doing things has an obvious limitation. Training an AI on stuff written by humans is going to make it act like a human. You can make it act like a smart human by being very careful with what exact data you shovel into it, but there's no way to make it act like a super-Einstein because we don't have data on what a super-Einstein would act like. We probably don't even have enough data on what Einsteins act like to make a model that's a good approximation of them.
+
+What if you didn't need *any* data?
+
+This is the evergreen promise of reinforcement learning. "Reinforcement learning" really just means "try things and do more of what works better". The only problem is figuring out what "better" actually means.
+
+The success of reinforcement learning in a domain or task, given enough compute (a big assumption!), is largely dependent on two things:
+1. How well it can be simulated
+2. How well "better" can be defined
+
+If both can be done well, you can probably make an AI that does the task at least as well as a human (in robotics, the hardware also has to be good enough.)
+
+Boardgames and videogames fulfill both of these very well. We invented all the rules and it is possible to win, so that's what better is. Usually you can even tell how close you are to winning - there's our signal for "better".
+
+Robotics is tougher. We can simulate physics, but it's never quite perfect. The real robots we build have things like machining tolerances and sensor inaccuracy that puts an upper limit on how well we can simulate them. And most of the time there's parameters that contribute significantly to physics that are hard or impossible to measure. For example, what's the coefficient of friction of a certain type of rubber in a certain shape with a certain amount of weight on it, on a certain type of surface? We can only approximate.
+
+This is known as the "reality gap". It causes serious problems for robots and there's no silver bullet. Sometimes your simulation has to be tweaked, sometimes you have to do some training on real-world data.
+
+The second problem - defining "better" - is much worse, and it's at the heart of alignment and safety research that extends far beyond any single algorithm. The core issue is that, as a task gets more complex, it gets vastly more difficult to create a "goodness" function (in RL, reward function) that maps decently to our built-in function for knowing how good a given state is for accomplishing the task.
+
+A concrete example: I trained a quadruped using reinforcement learning. The goal was to get it to walk, so the main components of its goodness function were the height of the body, and the forward velocity. [But it ended up doing something that's definitely not walking!](/train.html)
