@@ -5,17 +5,19 @@ pubDate: "Feb 5 2025"
 heroImage: "../imgs/claudecar.jpg"
 tags: ['essay']
 ---
-import { Image } from 'astro:assets';
+// import { Image } from 'astro:assets';
 
-import { Youtube } from '@astro-community/astro-embed-youtube';
+// import { Youtube } from '@astro-community/astro-embed-youtube';
 
-<Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" />
+// <Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" />
 
-[Link](https://github.com/pwspen)
+// [Link](https://github.com/pwspen)
+
+Aka "Why Deepseek R1 shows we're much closer to ASI than we thought"
 
 Reinforcement learning drove many of the advances in pre-LLM AI. It's by far the most common method of training robots to move, and it also drove important narrow-superintelligence advancements like chess and Go. Now it looks like it might be the most important invention in human history, driving us to AGI and beyond.
 
-Unsupervised is the main technology behind today's language model boom. A large fraction of the text on the internet is shoveled into an optimizer algorithm trained to sculpt a different algorithm (for most LLMs, a transformer) to predict the next token. Most people are aware of this by now.
+Unsupervised learning is the main technology behind today's language model boom. A large fraction of the text on the internet is shoveled into an optimizer algorithm trained to sculpt a different algorithm (for most LLMs, a transformer) to predict the next word.
 
 This way of doing things has an obvious limitation. Training an AI on stuff written by humans is going to make it act like a human. You can make it act like a smart human by being very careful with what exact data you shovel into it, but there's no way to make it act like a super-Einstein because we don't have data on what a super-Einstein would act like. We probably don't even have enough data on what Einsteins act like to make a model that's a good approximation of them.
 
@@ -38,3 +40,43 @@ This is known as the "reality gap". It causes serious problems for robots and th
 The second problem - defining "better" - is much worse, and it's at the heart of alignment and safety research that extends far beyond any single algorithm. The core issue is that, as a task gets more complex, it gets vastly more difficult to create a "goodness" function (in RL, reward function) that maps decently to our built-in function for knowing how good a given state is for accomplishing the task.
 
 A concrete example: I trained a quadruped using reinforcement learning. The goal was to get it to walk, so the main components of its goodness function were the height of the body, and the forward velocity. [But it ended up doing something that's definitely not walking!](/headwalk.html)
+
+By walking on its head, it greatly simplified the problem of coordinating four limbs into coordinating three with two of them moving in sync. Pretty smart! And really, that's the problem: If there's *any* way for the training process to find a way to get good reward with less effort, it will probably find it, and it probably won't do what you intended. In my case, the headwalking was after several iterations of reward function tweaking. At first, it just did yoga and didn't even move because it got too much reward for just staying alive.
+
+A much more dangerous situation is when there's gobs and gobs of reward available by doing something. This is the classic stamp or paperclip collector.
+
+So back to training an Einstein. We need to simulate the thinking process and we need some way of determining which thoughts are smarter.
+
+Until a couple years ago, we didn't have any way - not even close - to simulate human thinking at a reasonable fidelity. But that's exactly what language models have given us. 
+
+Interstingly, unlike robotics, there is no simulation-to-reality gap for language models, because the simulation (all the text fed to the models) *is* reality. So there's one problem down.
+
+And much more recently, the first tentative steps have been made into the second problem: defining what it means for a thought or thinking process to be better.
+
+Reasoning models are the culmination of these advancements. Unlike any previous LLMs (RLHF is not true RL), they have a step in training where the goal is entirely divorced from copying human text. Instead, it's to *be better at thinking*.
+
+So how do you evaluate if one thought is better than another? The current thinking is tied to verifiability: If one way of thinking is better at producing artifacts with verifiable properties, it's better.
+
+An artifact is a number, an equation, a graph, code. Anything that's easy to check whether it follows rules. You might check that a number is equal to what you expected, or that an equation goes through certain points. For code, there's a lot you can check: Does it work for all of the edge cases you can think of? How fast is it? How many lines is it? When combined with a thinking process that can write code or do math, these things are signals that can be used to steer that process.
+
+Deepseek R1 was released recently - the first large and open reasoning model. You've heard of it (and so have your mom and your dog and your pet rock) but IMO the most interesting things about it didn't make the headlines.
+
+As one of the first performant reasoning models that also published the training process, it's hard to compare it to other reasoning models. But notably, R1 relied fairly heavily on pure reinforcement learning. The first stage of its training was taking a regular ol' language model, giving it a simple prompt, and doing reinforcement learning with a simple reward model. Pretty much exactly as described above. Later non-RL stages were either to make the output more human friendly, or to improve the model's performance on tasks outside of reasoning.
+
+It's pretty startling that something so simple works so well. In fact, they tried more complicated reward functions, and found they performed worse.
+
+It's a resounding confirmation of the [bitter lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) in machine learning: compute usually wins over fancy ideas. (DeepSeek agrees: "... advancing beyond the boundaries of intelligence may still require more powerful base models and larger- scale reinforcement learning.") This new type of training is much more obvious than the last big advancement it's built upon (transformers).
+
+It's also, at least to me, absolutely terrifying that it works so well.
+
+The problem mentioned above of reinforcement learning finding ways to "cheat the system" is known as specification gaming or reward hacking. R1 has a pretty simple reward function (1 if correct 0 if not, plus up to 0.5 for following a certain answer format and staying in a single language), and even still it seems like there was little or no problem with reward hacking. Why not?
+
+Well, there's not much to hack when most of your reward comes from simply being correct, or not, no in-between (DeepSeek tried some reward models that allowed for in-between results and found they encouraged reward hacking). In some ways, reasoning is vastly simpler than robotics because it can be *correct*. There is a vastly wider range of possible results when you're walking or picking up an apple or doing a backflip, and it's not really possible to specify a single *correct* way of doing any of those things. Basically, reasoning and reinforcement learning are just a great pair.
+
+Points:
+- The promise of RL has always been that you don't need any data, just a simulation and a way to define "better"
+- Until recently, we didn't have a way to simulate or copy (it doesn't matter which) (at any reasonable fidelity) the human thinking / reasoning process, but LLMs gave us a great one
+- Text-based reasoning doesn't have a sim2real gap, and it also seems like it's possible to largely sidestep reward hacking with a binary reward function (which is only made possible by starting with a somewhat capable base model before RL)
+- A lot of the more complicated stuff they tried worked worse than the simpler process/reward that they ended up going with
+- R1 is a resounding confirmation of the bitter lesson, as DeepSeek themselves point out
+- There are no compelling reasons remaining that current methods (transformer LLMs + RL + tons of compute) won't be able to get us to superintelligence, unlike plain unsupervised learning
