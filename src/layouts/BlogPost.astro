@@ -5,14 +5,13 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import TagLink from "../components/TagLink.astro";
-
+import MarginNote from "../components/MarginNote.astro";
+import { noteStore } from "../utils/notes";
 type Props = CollectionEntry<"blog">["data"];
-
 const post = Astro.props;
-
 import { Image } from "astro:assets";
 ---
-
+{noteStore.reset()}
 <html lang="en" class="dark">
   <head>
     <BaseHead title={post.title} description={post.description} />
@@ -23,9 +22,6 @@ import { Image } from "astro:assets";
       <article class="px-4">
         <div class="flex justify-between mb-6">
           <FormattedDate date={post.pubDate} />
-          <!-- <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium tracking-wide">
-            5 min read
-          </p> -->
           <div>
             {
               post.tags && (
@@ -50,127 +46,127 @@ import { Image } from "astro:assets";
             )
           }
         </div>
-        <div class="mt-10">
+        <div class="mt-10 prose-container">
           <slot />
         </div>
       </article>
     </main>
     <Footer />
   </body>
-
   <style is:inline>
     /* Base Styles */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px 0;
-}
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 20px 0;
+    }
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--grey-900);
+        margin-top: 24px;
+        margin-bottom: 16px;
+        font-weight: bold;
+    }
+    h1 { font-size: 32px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 24px; }
+    h4 { font-size: 20px; }
+    h5 { font-size: 18px; }
+    h6 { font-size: 16px; }
+    /* Paragraphs */
+    p {
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
+    /* Blockquotes */
+    blockquote {
+        border-left: 4px solid #ccc;
+        padding: 10px 20px;
+        margin: 20px 0;
+        color: #666;
+        background-color: #f9f9f9;
+        @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
+    }
+    /* Code Blocks and Inline Code */
+    pre {
+        padding: 10px;
+        overflow-x: auto;
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
+    code {
+        padding: 2px 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 90%;
+    }
+    /* Tables */
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #f4f4f4;
+        @apply dark:bg-neutral-700;
+    }
+    /* Lists */
+    .footnotes ul, ol {
+        margin-top: 0;
+        margin-bottom: 16px;
+        padding-left: 20px;
+        list-style: outside;
+    }
+    /* Special HTML Tags */
+    abbr {
+        border-bottom: 1px dotted #666;
+        cursor: help;
+    }
+    kbd {
+        padding: 2px 4px;
+        font-size: 90%;
+        color: #fff;
+        background-color: #333;
+        border-radius: 3px;
+    }
+    mark {
+        background-color: yellow;
+        color: black;
+    }
+    sup, sub {
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+    }
+    sup { top: -0.5em; }
+    sub { bottom: -0.25em; }
+    .prose-container {
+          position: relative;
+          max-width: 100%; /* Adjust based on your needs */
+          margin: 0 auto;
+    }
+        
+    @media (max-width: 1200px) {
+      .prose-container {
+        max-width: 100%;
+      }
+    }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    color: var(--grey-900);
-    margin-top: 24px;
-    margin-bottom: 16px;
-    font-weight: bold;
-}
+    /* Add dark mode support for margin notes */
+    .dark .margin-note {
+      color: #999;
+    }
 
-h1 { font-size: 32px; }
-h2 { font-size: 28px; }
-h3 { font-size: 24px; }
-h4 { font-size: 20px; }
-h5 { font-size: 18px; }
-h6 { font-size: 16px; }
-
-/* Paragraphs */
-p {
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-/* Blockquotes */
-blockquote {
-    border-left: 4px solid #ccc;
-    padding: 10px 20px;
-    margin: 20px 0;
-    color: #666;
-    background-color: #f9f9f9;
-    @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
-}
-
-/* Code Blocks and Inline Code */
-
-pre {
-    padding: 10px;
-    overflow-x: auto;
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-code {
-    padding: 2px 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 90%;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-    @apply dark:bg-neutral-700;
-}
-
-/* Lists */
-.footnotes ul, ol {
-    margin-top: 0;
-    margin-bottom: 16px;
-    padding-left: 20px;
-    list-style: outside;
-}
-
-/* Special HTML Tags */
-abbr {
-    border-bottom: 1px dotted #666;
-    cursor: help;
-}
-
-kbd {
-    padding: 2px 4px;
-    font-size: 90%;
-    color: #fff;
-    background-color: #333;
-    border-radius: 3px;
-}
-
-mark {
-    background-color: yellow;
-    color: black;
-}
-
-sup, sub {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-
-
-
-
-</style>
-
-
-  </html>
+    @media (max-width: 1200px) {
+      .dark .margin-note {
+        background: #333;
+        border-left: 3px solid #666;
+      }
+    }
+  </style>
+</html>

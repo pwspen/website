@@ -7,6 +7,8 @@ tags: ['ai', 'electrical', 'code']
 ---
 import { Image } from 'astro:assets';
 
+import MarginNote from "../../components/MarginNote.astro";
+
 [View the code for the project here.](https://github.com/pwspen/vlmcar)
 I gave Claude eyes and wheels. Check out the log of a single run below.
 
@@ -37,6 +39,7 @@ and found that Claude was by far the best. Even the recent Gemini 2.0 wasn't as 
 terrible. Half the time they think they don't have access to an image. I guess that's what you get for tacking on
 a vision system to text weights without retraining. Qwen 72b seems maybe pretty good but it doesn't support tool calling
 on Openrouter (where I'm getting all the models from) yet so it can't be used with pydanticAI.
+
 
 I use the same log viewer component above on a local server to interpret actions in realtime. The python on the car talks
 to it over a websocket for live updates. I was kinda surprised just how much more information it gave me being able to see

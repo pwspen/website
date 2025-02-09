@@ -1,0 +1,40 @@
+---
+import { noteStore } from '../utils/notes';
+const noteNumber = noteStore.increment();
+---
+
+<span class="inline-note">[{noteNumber}]</span>
+<span class="margin-note" data-note={noteNumber}>
+  [{noteNumber}]
+  <slot />
+</span>
+
+<style>
+  .inline-note {
+    color: #666;
+    font-size: 0.8em;
+    vertical-align: super;
+  }
+
+  .margin-note {
+    position: absolute;
+    right: -45%;
+    width: 40%;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: -1.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 1200px) {
+    .margin-note {
+      position: static;
+      width: 100%;
+      margin: 1em 0;
+      padding: 1em;
+      background: #f0f0f0;
+      border-left: 3px solid #666;
+    }
+  }
+</style>

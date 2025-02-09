@@ -2,9 +2,10 @@
 title: "Reinforcement Learning: once and future king"
 description: "desc"
 pubDate: "Feb 5 2025"
-heroImage: "../imgs/claudecar.jpg"
 tags: ['essay']
 ---
+import MarginNote from "../../components/MarginNote.astro";
+
 {/*
 // import { Image } from 'astro:assets';
 
@@ -55,7 +56,7 @@ Interstingly, unlike robotics, there is no simulation-to-reality gap for languag
 
 And much more recently, the first tentative steps have been made into the second problem: defining what it means for a thought or thinking process to be better.
 
-Reasoning models are the culmination of these advancements. Unlike any previous LLMs (RLHF is not true RL), they have a step in training where the goal is entirely divorced from copying human text. Instead, it's to *be better at thinking*.
+Reasoning models are the culmination of these advancements. Unlike any previous LLMs <MarginNote> RLHF is not very similar to reasoning RL. To me, the important part about RL is that the learning trickles down from validated true facts of reality, in a more direct way than any other type of training. In RLHF, the learning trickles down from human preference. Reasoning RL can *improve* LLM reasoning, RLHF can only make it so humans prefer it more. Even if humans were specifically trying to select good reasoning patterns (not at all what RLHF is usually used for), human discernment between good and bad reasoning will get worse as the reasoning quality approaches and passes that of humans. </MarginNote> they have a step in training where the goal is entirely divorced from copying human text. Instead, it's to *be better at thinking*.
 
 So how do you evaluate if one thought is better than another? The current thinking is tied to verifiability: If one way of thinking is better at producing artifacts with verifiable properties, it's better.
 
@@ -79,6 +80,7 @@ Points:
 - The promise of RL has always been that you don't need any data, just a simulation and a way to define "better"
 - Until recently, we didn't have a way to simulate or copy (it doesn't matter which) (at any reasonable fidelity) the human thinking / reasoning process, but LLMs gave us a great one
 - Text-based reasoning doesn't have a sim2real gap, and it also seems like it's possible to largely sidestep reward hacking with a binary reward function (which is only made possible by starting with a somewhat capable base model before RL)
+- RLHF is not at all similar to this new type of reasoning RL!
 - A lot of the more complicated stuff they tried worked worse than the simpler process/reward that they ended up going with
 - R1 is a resounding confirmation of the bitter lesson, as DeepSeek themselves point out
 - There are no compelling reasons remaining that current methods (transformer LLMs + RL + tons of compute) won't be able to get us to superintelligence, unlike plain unsupervised learning
