@@ -150,6 +150,38 @@ import { Image } from "astro:assets";
           max-width: 100%; /* Adjust based on your needs */
           margin: 0 auto;
     }
+
+    [class*="iw-"] {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-left: 0;
+      margin-right: 0;
+      display: block;
+    }
+
+    /* Override the base img styles for iw-classes */
+    img[class*="iw-"] {
+      max-width: none;
+      width: var(--iw-width);
+    }
+
+    /* Generate viewport width classes from 30 to 200 in increments of 5 */
+    .iw-30 { --iw-width: 30vw; }
+    .iw-35 { --iw-width: 35vw; }
+    .iw-40 { --iw-width: 40vw; }
+    .iw-45 { --iw-width: 45vw; }
+    .iw-50 { --iw-width: 50vw; }
+    .iw-55 { --iw-width: 55vw; }
+    .iw-60 { --iw-width: 60vw; }
+    .iw-65 { --iw-width: 65vw; }
+    .iw-70 { --iw-width: 70vw; }
+    .iw-75 { --iw-width: 75vw; }
+    .iw-80 { --iw-width: 80vw; }
+    .iw-85 { --iw-width: 85vw; }
+    .iw-90 { --iw-width: 90vw; }
+    .iw-95 { --iw-width: 95vw; }
+    .iw-100 { --iw-width: 100vw; }
         
     @media (max-width: 1200px) {
       .prose-container {
