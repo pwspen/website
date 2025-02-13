@@ -1,0 +1,52 @@
+---
+title: "Why LLMs + RL Is All You Need (to create superintelligence)"
+description: "desc"
+pubDate: "Feb 12 2025"
+heroImage: ""
+tags: ["essay"]
+---
+import { Image } from 'astro:assets';
+import { Youtube } from '@astro-community/astro-embed-youtube';
+import MarginNote from "../../components/MarginNote.astro";
+
+{/*
+<Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" />
+
+[Link](https://github.com/pwspen)
+
+<MarginNote> This is a note in the right margin </MarginNote>
+<MarginNote> </MarginNote>
+*/}
+
+In the last six months, a new way of training AI has proven itself, parting the mists around the next couple years of AI advancement, and there's now a clear path to push capabilities far beyond their current levels (which there arguably wasn't six months ago).
+
+This training method is extremely promising - it's shortened my personal AI timelines by 2x. Its potential is also completely terrifying. I'm looking at the cost of land far from population centers and trying to shift careers into AI safety. Below, I hope to succinctly explain the core ideas behind the advancement (reinforcement learning (RL) + LLMs), and why this might be your sign to start paying attention to AI if you've been a skeptic thus far.
+
+All of the recent reasoning models (o1, o3, R1) were trained using reinforcement learning, while previous LLMs relied on unsupervised learning <MarginNote>for the bulk of their capabilities. RLHF is a thing, but it tunes to human preferences while reasoning RL tunes to *truth* - a big difference!</MarginNote>. Unsupervised learning is memorizing patterns in data to find the likeliest next data point. Reinforcement learning is trying things and doing more of what works.
+
+Imagine a chef that has learned to cook by watching other chefs make dishes, compared to a chef that makes dishes and tastes them. Which will serve a better steak? One learns by watching what other people do. There's clearly a skill cap in this case. The other learns by doing things and verifying whether or not (or how well <MarginNote>But this is more susceptible to [reward hacking](https://en.wikipedia.org/wiki/Reward_hacking). Deepseek R1 specifically chose a binary "worked or didn't" reward to combat reward hacking.</MarginNote>) it worked. Here there's nothing of the sort.
+
+It's really the combination of RL and unsupervised learning, though, that has so much potential. To do RL on a given task, you need two things: To be able to simulate the task decently, and a clear definition of "better", the metric that you want the training process to optimize. How does this apply to the task of reasoning? For technical problems like math and code, defining better is easy: you can just check the answer. If 2+2 doesn't equal 4, it's wrong. If a function to sort a list returns [3, 1, 2], it's wrong.
+
+But until recently, we didn't have a way to simulate reasoning. This is what LLMs (powered by unsupervised learning) have given us: a simulacrum of the human thought process. It doesn't matter one bit to RL if it's the same things happening underneath, it just matters if they look about the same. And they do!
+
+Strikingly, it appears that the reasoning model training process is largely about aligning the bits of the LLM that already knew about reasoning to make 'reasoning' the default state, instead of training the model to reason from scratch. Humans have something like this, too: You can concentrate hard on something to make sure you get it right, but it's exhausting to do so for long periods. Reasoning training puts the language model in this state permanently, at no extra cost <MarginNote> No extra cost *per token*. Models learn to lengthen their responses to improve their performance, so the cost per task is higher. </MarginNote> (LLMs don't get tired). Because it's about eliciting already-present thought patterns more than creating new ones, performant reasoning models can be [trained on](https://github.com/simplescaling/s1) [shoestring budgets](https://github.com/Jiayi-Pan/TinyZero).
+
+An important difference between training methods is that unsupervised learning training works on the token level: The model learns from each token that it predicts. The reasoning model training process usually uses entire tasks, not tokens, as single training 'events'. This is less efficient <MarginNote> The [Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) always wins! </MarginNote>, but it optimizes for what we actually care about. You don't care if a model gets one word right that seems like a plausible part of the answer to your question. You do care if it answers your question correctly. Not checking the model's every token also gives it more freedom. <MarginNote>This extra freedom is why pure RL, like R1-Zero, can have pretty wonky outputs, while still having high accuracy.</MarginNote>
+
+Another distinction between unsupervised training and RL: The internet has been thoroughly scraped for all of its text at this point to provide data for unsupervised learning, and the focus has shifted more towards curation of that text and generation of new, high quality text to teach smaller models. But when you're training a model to reason, the data you need is *questions whose answers are known* (or can be verified). <MarginNote> Here the lines between supervised learning and RL blur. </MarginNote> And it seems like we've barely scratched the surface on that. Every scientific paper ever published - millions and millions - probably has a couple verifiable questions.
+
+One of the most interesting insights from Deepseek's R1 was that the more complicated stuff they tried to optimize the reasoning training process worked *worse* <MarginNote>The big problem was reward hacking, the bane of all RL.</MarginNote> than the simple stuff. They settled on a very simple reward model, with most of the reward being for getting the task right or not, and a smaller portion when proper formatting is followed.
+
+So where does this leave us?
+
+We have a new stage of LLM training that:
+1. Optimizes for "truth" <MarginNote> Or at least, something much closer to it than we could optimize for previously. </MarginNote> across a wide range of knowledge tasks
+2. Opens up new training data sources (any objectively verifiable question is game)
+3. Has no apparent capability ceiling - Just look at AlphaGo!
+
+For a while, it was unclear if LLMs would be the thing getting us to AGI and ASI. Based on the above points, it seems very likely to me that *LLMs + RL is enough to get to the point where we're not the ones making the decisions anymore.*
+
+I can't predict the future, but I can say with extremely high certainty that, in the time it's taken to write this post, thousands or millions of technical problems have been tackled by silicon minds in the datacenters of Meta, OpenAI, Google, and all the rest. They learn from those they get correct, and from those they don't. This blistering pace is the slowest that they will learn for the rest of history. And right now is the stupidest they'll ever be, and they're already solidly above the average person, or even average college grad.
+
+The age of humans is coming to a close.
