@@ -3,26 +3,23 @@ import { noteStore } from '../utils/notes';
 const noteNumber = noteStore.increment();
 ---
 
-<span class="inline-note">[{noteNumber}]</span>
-<span class="margin-note" data-note={noteNumber}>
-  [{noteNumber}]
-  <slot />
-</span>
-
+<note class="note" className="sups">[{noteNumber}]</note><spa class="margin-note" data-note={noteNumber}>[{noteNumber}] <slot /></span>{" "}
+{/* the spa is not a typo - I have no fuckign clue why but if it's span, an extra whitespace is inserted before the <spa component which messes everything up, astro compiler being stupid? */}
 <style>
-  .inline-note {
-    color: #666;
-    font-size: 0.8em;
-    vertical-align: super;
-  }
+  .note {
+      font-size: 0.9em;
+      color: #555;
+      padding-left: -1em;
+    }
+
 
   .margin-note {
     position: absolute;
     right: -45%;
     width: 40%;
     font-size: 0.9em;
-    color: #666;
-    margin-top: -1.5em;
+    color: #555;
+    margin-top: 0em;
     padding-left: 1em;
     box-sizing: border-box;
   }

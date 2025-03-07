@@ -23,6 +23,7 @@
     "astro": "^4.11.5",
     "astro-iconify": "^1.2.0",
     "astro-navbar": "^2.3.2",
+    "astro-remove-whitespace": "^1.0.1",
     "clsx": "^2.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

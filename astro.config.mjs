@@ -7,10 +7,12 @@ import react from "@astrojs/react";
 
 import { remarkReadingTime } from './src/utils/remarkReadingTime.mjs';
 
+import removeTagWhitespace from 'astro-remove-whitespace';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://synapsomorphy.com',
-  integrations: [mdx(), sitemap(), tailwind(), react()],
+  integrations: [mdx(), sitemap(), tailwind(), react(), removeTagWhitespace()],
   vite: {
     resolve: {
       alias: {
