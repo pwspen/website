@@ -13,6 +13,16 @@ NGINX_AVAILABLE="/etc/nginx/sites-available/$DOMAIN"
 NGINX_ENABLED="/etc/nginx/sites-enabled/$DOMAIN"
 NGINX_CONFIG="$SCRIPT_DIR/$DOMAIN"
 
+# Ensure Node installed via pnpm env is available in non-login shells
+if [ -d "$HOME/.local/share/pnpm/nodejs" ]; then
+    for dir in "$HOME"/.local/share/pnpm/nodejs/*/bin; do
+        if [ -d "$dir" ]; then
+            PATH="$dir:$PATH"
+        fi
+    done
+    export PATH
+fi
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
