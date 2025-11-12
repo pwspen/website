@@ -41,21 +41,26 @@ server {
         try_files $uri $uri/ /index.html;
     }
     
-    # Cache static assets
-    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    # Cache static assets for the main site (not /arc/)
+    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff2?|ttf|eot)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
+        try_files $uri =404;
     }
 
-    # ARC viz subdirectory - serve static frontend files
-    location /arc/ {
+    # ARC viz - take precedence over regex locations
+    location ^~ /arc/ {
         alias /var/www/arc/viz/dist/;
-        try_files $uri $uri/ /arc/index.html;
+        index index.html;
+
+        # Serve files if they exist; fallback to index.html for SPA routing
+        # Use URI /arc/ so it maps back into this alias and serves index.html
+        try_files $uri $uri/ /arc/;
     }
 
     # ARC API - proxy to backend
     location /arc/api/ {
-        proxy_pass http://127.0.0.1:8000/;
+        proxy_pass http://127.0.0.1:8010;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
