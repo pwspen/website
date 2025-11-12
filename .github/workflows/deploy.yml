@@ -14,15 +14,39 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DEPLOY_BRANCH: main
+      NODE_VERSION: '22'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
 
       - name: Add known hosts
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+
+      - name: Upload build artifacts
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          source: "dist/*"
+          target: "${{ secrets.DEPLOY_PATH }}/dist"
+          rm: true
 
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -38,4 +62,4 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH }}
             git fetch --prune origin "$BRANCH"
             git reset --hard "origin/${BRANCH}"
-            ./deploy.sh
+            ./deploy.sh --skip-build

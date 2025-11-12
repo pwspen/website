@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Synapsomorphy.com Deployment Script
-# Usage: ./deploy.sh [--force-new]
+# Usage: ./deploy.sh [--force-new] [--skip-build]
 # split into install and deploy scripts, so deploy script doesn't need sudo? (use nvm instead of sudo -u .. npm ..)
 
 set -e  # Exit on any error
@@ -47,6 +47,26 @@ error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+FORCE_NEW=0
+SKIP_BUILD=0
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --force-new)
+                FORCE_NEW=1
+                ;;
+            --skip-build)
+                SKIP_BUILD=1
+                ;;
+            *)
+                warn "Ignoring unknown option: $1"
+                ;;
+        esac
+        shift
+    done
+}
+
 # Check if running as root or with sudo
 check_permissions() {
     if [[ $EUID -ne 0 ]]; then
@@ -57,7 +77,7 @@ check_permissions() {
 
 # Check if this is a new installation
 is_new_install() {
-    if [[ "$1" == "--force-new" ]]; then
+    if [[ $FORCE_NEW -eq 1 ]]; then
         return 0
     fi
     
@@ -159,6 +179,11 @@ deploy_nginx_config() {
 # Build the website
 build_website() {
     log "Building website..."
+    
+    if [[ $SKIP_BUILD -eq 1 ]]; then
+        log "Skipping build step because pre-built artifacts were provided"
+        return 0
+    fi
     
     cd "$SCRIPT_DIR"
     
@@ -268,11 +293,16 @@ test_deployment() {
 
 # Main deployment function
 main() {
+    parse_args "$@"
     log "Starting deployment for $DOMAIN..."
     
     check_permissions
     
-    if is_new_install "$1"; then
+    if is_new_install; then
+        if [[ $SKIP_BUILD -eq 1 ]]; then
+            warn "--skip-build ignored during new installation"
+            SKIP_BUILD=0
+        fi
         log "Detected new installation, performing full setup..."
         
         install_packages
