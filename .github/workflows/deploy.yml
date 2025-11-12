@@ -18,6 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Add known hosts
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -25,11 +31,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
           script_stop: true
           script: |
             set -e
+            BRANCH="${{ env.DEPLOY_BRANCH }}"
             cd ${{ secrets.DEPLOY_PATH }}
-            git fetch --prune origin "$DEPLOY_BRANCH"
-            git reset --hard "origin/${DEPLOY_BRANCH}"
+            git fetch --prune origin "$BRANCH"
+            git reset --hard "origin/${BRANCH}"
             ./deploy.sh
