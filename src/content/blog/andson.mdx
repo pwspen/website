@@ -1,0 +1,38 @@
+---
+title: "Andson Biotech"
+description: "desc"
+pubDate: "Nov 12 2025"
+heroImage: "../imgs/andson/main.png"
+tags: []
+---
+import { Image } from 'astro:assets';
+import { Youtube } from '@astro-community/astro-embed-youtube';
+import MarginNote from "../../components/MarginNote.astro";
+
+I was the first software or electrical engineer at Andson Biotech (YC W22 - [website](https://andsonbiotech.com/), [linkedin](https://www.linkedin.com/company/andson-biotech)). I built the entire tech stack of the Dynachip X1 mass spectrometry sample filtration device from scratch. This included a Python backend, React frontend, and embedded C++, as well as custom PCBs, and various cloud infra. I did this as a one-man team. My time was split ~80/20 software/electrical.
+
+I worked at Andson from May 2024 - June 2025 and it was a ton of fun! It was my first work experience on a consumer product, and my first time building the electronics and software of something with so many moving parts (literally and figuratively). The end result is (as of Nov 2025) a robust, smart machine and a quickly growing company.
+
+As well as the on-device software, I developed a shared database for usage metrics (Postgres) that syncs with on-device databases (SQLite) for offline use. I also created various visualization and fleet tracking frontends, an OTA update system, a tool to write RFID to the device's consumables, and various smaller internal tools.
+
+One of the most difficult and fun parts of my time at Andson was the device's pressure control loop. For proper function, it's very important that pressure is exactly matched across a small membrane, but the membrane is so small that each side is largely isolated, which necessitates tracking the pressure on each side and minimizing the delta, rather than targeting a specific pressure. Also, both sides can change pressure rapidly. And the expensive consumable can be broken if the delta is too high! Combined, these requirements create a nasty controls problem. I was able to crate a robust and somewhat self-calibrating solution to this problem.
+
+Another highlight was chasing down and eventually resolving a core electrical technical challenge of the technology, which manifested as a sporadic near-complete failure of the device's filtration (its core purpose). After months of taking notes and trying to achieve reproducibility, I implemented a solution on PCB which stood the test of time.
+
+During my time at Andson, I realized that I enjoy software much more than electrical or mechanical, and am also better at it. So once the product was mostly complete, I left to find a better fit for my skillset.
+
+<Image src={import('@imgs/andson/interface.jpeg')} alt="" />
+<Image src={import('@imgs/andson/lab.jpeg')} alt="" />
+<Image src={import('@imgs/andson/assem_line.jpeg')} alt="" />
+<Image src={import('@imgs/andson/carter.jpeg')} alt="" />
+<Image src={import('@imgs/andson/spu.jpeg')} alt="" />
+
+{/*
+heroImage must be deleted from frontmatter if not used - "" doesn't work!
+
+<Image src={import('@imgs/')} alt="" />
+
+[Link](https://github.com/pwspen)
+
+<MarginNote> This is a note in the right margin </MarginNote>
+*/}
