@@ -31,12 +31,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Add known hosts
-        run: |
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
       - name: Upload build artifacts
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -44,6 +38,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
-          source: "dist/dist/*"
+          source: "dist/*"
           target: "${{ secrets.DEPLOY_PATH }}"
           rm: true
