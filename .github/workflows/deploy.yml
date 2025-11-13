@@ -41,3 +41,4 @@ jobs:
           source: "dist/*"
           target: "${{ secrets.DEPLOY_PATH }}"
           rm: true
+          strip_components: 1
