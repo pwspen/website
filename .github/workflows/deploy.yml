@@ -44,6 +44,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
-          source: "dist/*"
+          source: "dist/dist/*"
           target: "${{ secrets.DEPLOY_PATH }}"
           rm: true
