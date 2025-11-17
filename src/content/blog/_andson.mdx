@@ -15,13 +15,13 @@ I worked at Andson from May 2024 - June 2025 and it was a ton of fun! It was my 
 
 As well as the on-device software, I developed a shared database for usage metrics (Postgres) that syncs with on-device databases (SQLite) for offline use. I also created various visualization and fleet tracking frontends, an OTA update system, a tool to write RFID to the device's consumables, and various smaller internal tools.
 
-One of the most difficult and fun parts of my time at Andson was the device's pressure control loop. For proper function, it's very important that pressure is exactly matched across a small membrane, but the membrane is so small that each side is largely isolated, which necessitates tracking the pressure on each side and minimizing the delta, rather than targeting a specific pressure. Also, both sides can change pressure rapidly. And the expensive consumable can be broken if the delta is too high! Combined, these requirements create a nasty controls problem. I was able to crate a robust and somewhat self-calibrating solution to this problem.
+One of the most difficult and fun parts of my time at Andson was the device's fluids control loop. For proper system function, it's important that two flow paths with orders of magnitude different flowrates are both precisely measured and controlled. Additional constraints make this quite the nasty controls problem. Using various sensors (pressure and flowrate), I was able to develop a precise and robust controller that is able to maintain stability (and thus system functionality) under widely varying conditions.
 
 Another highlight was chasing down and eventually resolving a core electrical technical challenge of the technology, which manifested as a sporadic near-complete failure of the device's filtration (its core purpose). After months of taking notes and trying to achieve reproducibility, I implemented a solution on PCB which stood the test of time.
 
 I interfaced extensively with Andson's mechanical engineers and scientists. This (as well as being a one-man team) helped my communication skills a lot; I was forced to translate my programming and electrical knowledge into actionable information for people not familiar with software or circuits. It was also fun to be one of few non-PhD technical employees - I learned a lot through osmosis (and also learned _about_ osmosis).
 
-During my time at Andson, I realized that I enjoy software much more than electrical or mechanical, and am also better at it. So once the product was mostly complete, I left to find a better fit for my skillset.
+During my time at Andson, I realized my passion and natural inclination towards software. Once a semi-stable product was delivered, I decided to pursue other opportunies where I could better grow and apply my software skills. 
 
 <Image src={import('@imgs/andson/interface.jpeg')} alt="" />
 <Image src={import('@imgs/andson/lab.jpeg')} alt="" />
