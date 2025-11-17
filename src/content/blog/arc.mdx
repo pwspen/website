@@ -1,0 +1,24 @@
+---
+title: "Work on ARC-AGI"
+description: "desc"
+pubDate: "Nov 17 2025"
+heroImage: "../imgs/arc/image.png"
+tags: []
+---
+import { Image } from 'astro:assets';
+import { Youtube } from '@astro-community/astro-embed-youtube';
+import MarginNote from "../../components/MarginNote.astro";
+
+I have recently been thinking a lot about the [ARC-AGI benchmark / challenge](https://arcprize.org/arc-agi). I built a visualizer for a perception algorithm I'm working on, which you can find [here](https://synapsomorphy.com/arc/). For each task, a variety of different heatmaps are computed and available to visualize if you select them from the drop-down.
+
+I also presented my general thoughts and approach to ARC in two presentations, which you can read [here](https://docs.google.com/presentation/d/1raPaGS18nMa2vpIzmJvidi0VPgmyea8T2fLbcZRQH4E/) and [here](https://docs.google.com/presentation/d/1--CQPsoP9KNX4sVDkXDKSPaIIDeWIJ4GHdlYvgHFbig/). They cover similar ideas from two different angles, but the gist is: I think deep learning is fundamentally unsuited to ARC! I realize this is not a popular opinion. It seems to me like deep learning is good at continuous symmetries and bad at discrete ones, and ARC is just about completely discrete. In this regime, overfitting is a death blow. I'm looking for ARC-AGI-3 teammates, so if you like what you read in the presentations, send me an email!
+
+{/*
+heroImage must be deleted from frontmatter if not used - "" doesn't work!
+
+<Image src={import('@imgs/claudecar.jpg')} alt="ClaudeCar" />
+
+[Link](https://github.com/pwspen)
+
+<MarginNote> This is a note in the right margin </MarginNote>
+*/}
